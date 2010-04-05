@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+version := $(shell awk '/Package/{print$$2}' debian/control)
+
+build:
+	$(MAKE) -j$(shell grep -c ^processor /proc/cpuinfo)
+
+binary: binary-arch
+
+binary-arch: build install
+
+binary-indep:
+
+install: build
+	$(MAKE) INSTDIR=$(CURDIR)/debian/${version}/usr install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installman aacplusenc.1
+	dh_strip
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_compress
+	dh_builddeb -- -Zbzip2
+
+clean:
+	$(MAKE) clean
+	dh_clean

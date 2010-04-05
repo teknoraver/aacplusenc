@@ -1,0 +1,79 @@
+#!/bin/sh
+
+>config.mak
+cat >config.h <<'EOF'
+#ifndef _CONFIG_H
+#define _CONFIG_H
+EOF
+
+echo -n 'Checking for libfftw3f...'
+
+gcc -o test-fft -Wall -x c -lfftw3f -I/usr/local/include -L/usr/local/lib - <<'EOF'
+#include <fftw3.h>
+
+#define N 128
+
+int main(int argc, char *argv[])
+{
+	fftwf_complex *data;
+	fftwf_plan p;
+
+	data = (fftwf_complex*) fftwf_malloc(sizeof(fftwf_complex) * N);
+	p = fftwf_plan_dft_1d(N, data, data, FFTW_FORWARD, FFTW_ESTIMATE);
+
+	fftwf_execute(p);
+
+	fftwf_destroy_plan(p);
+	fftwf_free(data);
+	return 0;
+}
+EOF
+
+if ./test-fft
+then
+	echo OK
+	echo '#define _FFTW3' >> config.h
+	echo 'export FFTW3=1' >> config.mak
+fi
+
+echo -n 'Detecting endianness...'
+
+gcc -o test-endian -Wall -x c - <<'EOF'
+#include <stdint.h>
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+	uint32_t dword = 0x11223344;
+	uint8_t *byte = (uint8_t*)&dword;
+
+	if(byte[0] == 0x44 && byte[1] == 0x33 && byte[2] == 0x22 && byte[3] == 0x11) {
+		printf("EL");
+		return 0;
+	}
+
+	if(byte[0] == 0x11 && byte[1] == 0x22 && byte[2] == 0x33 && byte[3] == 0x44) {
+		printf("BE");
+		return 0;
+	}
+	return 1;
+}
+EOF
+
+if ./test-endian > /dev/null
+then
+	ENDIAN=$(./test-endian)
+	if [ $ENDIAN = EL ]
+	then
+		echo 'Little Endian'
+		echo '#define _EL_ARCH' >> config.h
+	elif [ $ENDIAN = BE ]
+	then
+		echo 'Big Endian'
+		echo '#define _BE_ARCH' >> config.h
+	fi
+fi
+
+echo '#endif' >> config.h
+
+echo 'Now run make'

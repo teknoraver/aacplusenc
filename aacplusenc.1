@@ -1,0 +1,40 @@
+.TH "AACPLUSENC" "1" "19 January 2008" "Matteo Croce" "Debian GNU/Linux"
+.SH "NAME"
+aacplusenc \- AAC+ encoder
+.SH "SYNOPSIS"
+.B aacplusenc
+.I inputfile.wav outputfile.aac bitrate
+.PP
+.SH "DESCRIPTION"
+\fBaacplusenc\fP is an \fIHE\-AACv2\fP encoder.
+
+It accepts as input a \fIWAV\fP file and outputs an \fIAAC\fP file, with \fIRAW ADTS\fP header.
+.PP
+.SH "OPTIONS"
+.TP 8
+.B inputfile.wav
+The file to encode
+.TP 8
+.B outputfile.aac
+The desired filename of the encoded file
+.TP 8
+.B bitrate
+The encoding bitrate, in kbps
+.TP 8
+both inputfile and outputfile can be \fI"\-"\fP to specify stdin and stdout respectively
+.SH "NOTES"
+On 64 bit platform there are issues with Parametric Stereo (PS) an algorithm to give
+better quality on stereo tracks.
+.PP
+As PS is enabled for bitrates lower than 45 kbps, a 64 bit build of \fBaacplusenc\fP can only encode
+mono tracks or stereo tracks encoded with bitrates of 45 kbps and over
+.SH "AUTHOR"
+\fBaacplusenc\fP is written by Matteo Croce <\fIrootkit85@yahoo.it\fP> and its based on 3GPP sources.
+
+Get the latest version from \fIhttp://teknoraver.campuslife.it/software/mp4tools/\fP
+
+The 3GPP project used by \fBaacplusenc\fP: for more info visit \fIhttp://www.3gpp.org/ftp/Specs/archive/26_series/26.410/\fP
+
+AAC+ is licensed by Coding Technologies, for info read: \fIhttp://codingtechnologies.com/products/aacPlus.htm\fP
+
+This manpage was written by Matteo Croce <\fIrootkit85@yahoo.it\fP> and licensed under the terms of the GNU General Public License.
