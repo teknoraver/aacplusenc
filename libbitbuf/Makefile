@@ -7,7 +7,7 @@
 ################## user section: insert objlist here #######
 LIB=libbitbuf.a
 
-SRCS=bitbuffer.c
+SRCS=$(wildcard *.c)
 
 OBJS = $(SRCS:.c=.o)
 

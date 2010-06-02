@@ -7,7 +7,7 @@
 ################## user section: insert objlist here #######
 LIB=libresamp.a
 
-SRCS=iir32resample.c resampler.c
+SRCS=$(wildcard *.c)
 
 OBJS = $(SRCS:.c=.o)
 

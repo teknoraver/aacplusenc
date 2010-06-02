@@ -7,7 +7,7 @@
 ################## user section: insert objlist here #######
 LIB=libfr.a
 
-SRCS=transcendent.c cfftn.o
+SRCS=$(wildcard *.c)
 
 OBJS = $(SRCS:.c=.o)
 

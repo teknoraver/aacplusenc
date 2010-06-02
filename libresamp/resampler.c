@@ -10,7 +10,7 @@
 #include "counters.h" /* the 3GPP instrumenting tool */
 
 #define MAX_COEFF 32
-
+//#define NEWIIR
 
 struct IIR_PARAM{
   const float *coeffIIRa;
