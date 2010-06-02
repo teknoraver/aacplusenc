@@ -1,0 +1,8 @@
+*.o
+*.a
+aacplusenc
+config.h
+config.mak
+test-*
+*.aac
+*.wav
