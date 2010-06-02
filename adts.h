@@ -9,13 +9,12 @@
 
 #include "aacenc.h"
 
-const int aac_sampling_freq[16] = {96000, 88200, 64000, 48000, 44100, 32000,
-                                   24000, 22050, 16000, 12000, 11025,  8000,
-                                   0, 0, 0, 0}; /* filling */
-const int id = 0, profile = 1;
+static const int aac_sampling_freq[16] = {96000, 88200, 64000, 48000, 44100, 32000,
+                                   24000, 22050, 16000, 12000, 11025,  8000};
+static const char id = 0, profile = 1;
 
 void adts_hdr(char *adts, AACENC_CONFIG *config) {
-	int srate_idx = 15, i;
+	char srate_idx = 15, i;
 
 	/* sync word, 12 bits */
 	adts[0] = (char)0xff;
@@ -50,11 +49,11 @@ void adts_hdr(char *adts, AACENC_CONFIG *config) {
 	adts[6] = (char)0xfc;
 }
 
-void adts_hdr_up(char *adts, int size)
+void adts_hdr_up(char *adts, unsigned short len)
 {
 	/* frame length, 13 bits */
-	int len = size + 7;
-	adts[3] = (adts[3] & 0xc0) | (len >> 11);
-	adts[4] = (len >> 3) & 0xff;
+	len += 7;
+	adts[3] = (adts[3] & 0xfc) | (len >> 11);
+	adts[4] = len >> 3;
 	adts[5] = (len & 7) << 5 | (char)0x1f;
 }
