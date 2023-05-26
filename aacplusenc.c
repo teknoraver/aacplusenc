@@ -519,9 +519,9 @@ int main(int argc, char *argv[])
 
 		/* 3GPP instrumenting tool: measure worst case work load at end of each decoding loop */
 
-        if (inputInfo.nSamples > 0) {
+		if (inputInfo.nSamples > 0) {
 			newpercent = frmCnt * AACENC_BLOCKSIZE * inputInfo.nChannels / (inputInfo.nSamples / (4 * 100));
-        }
+		}
 		if (newpercent != percent) {
 			percent = newpercent;
 			fprintf(stderr, "[%d%%]\r", newpercent);
