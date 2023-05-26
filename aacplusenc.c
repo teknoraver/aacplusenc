@@ -519,7 +519,9 @@ int main(int argc, char *argv[])
 
 		/* 3GPP instrumenting tool: measure worst case work load at end of each decoding loop */
 
-		newpercent = frmCnt * AACENC_BLOCKSIZE * inputInfo.nChannels / (inputInfo.nSamples / (4 * 100));
+        if (inputInfo.nSamples > 0) {
+			newpercent = frmCnt * AACENC_BLOCKSIZE * inputInfo.nChannels / (inputInfo.nSamples / (4 * 100));
+        }
 		if (newpercent != percent) {
 			percent = newpercent;
 			fprintf(stderr, "[%d%%]\r", newpercent);
@@ -533,7 +535,9 @@ int main(int argc, char *argv[])
 	   Close encoder
 	 */
 
-	AacEncClose(aacEnc);
+    if (numSamplesRead > 0) {
+		AacEncClose(aacEnc);
+    }
 
 	AuChannelClose(inputFile);
 
