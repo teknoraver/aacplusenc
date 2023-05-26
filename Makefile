@@ -5,9 +5,9 @@ SUBDIRS=libaacenc libbitbuf libfr libsbrenc libresamp
 LIBS=libaacenc/libaacenc.a libbitbuf/libbitbuf.a libfr/libfr.a libsbrenc/libsbrenc.a libresamp/libresamp.a
 TARGET=aacplusenc
 
-LDFLAGS=-lm
-LDFLAGS+=-L$(TOPDIR)/libaacenc -L$(TOPDIR)/libbitbuf -L$(TOPDIR)/libfr -L$(TOPDIR)/libsbrenc -L$(TOPDIR)/libresamp
+LDFLAGS=-L$(TOPDIR)/libaacenc -L$(TOPDIR)/libbitbuf -L$(TOPDIR)/libfr -L$(TOPDIR)/libsbrenc -L$(TOPDIR)/libresamp
 LDFLAGS+=-laacenc -lbitbuf -lfr -lsbrenc -lresamp
+LDFLAGS+=-lm
 
 ifdef FFTW3
 	LDFLAGS+=-lfftw3f

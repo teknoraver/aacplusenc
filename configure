@@ -8,7 +8,7 @@ EOF
 
 echo -n 'Checking for libfftw3f...'
 
-gcc -o test-fft -Wall -x c -lfftw3f -I/usr/local/include -L/usr/local/lib - <<'EOF'
+gcc -o test-fft -Wall -x c -I/usr/local/include -L/usr/local/lib - -lfftw3f <<'EOF'
 #include <fftw3.h>
 
 #define N 128
