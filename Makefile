@@ -6,11 +6,10 @@ LIBS=libaacenc/libaacenc.a libbitbuf/libbitbuf.a libfr/libfr.a libsbrenc/libsbre
 TARGET=aacplusenc
 
 LDFLAGS=-L$(TOPDIR)/libaacenc -L$(TOPDIR)/libbitbuf -L$(TOPDIR)/libfr -L$(TOPDIR)/libsbrenc -L$(TOPDIR)/libresamp
-LDFLAGS+=-laacenc -lbitbuf -lfr -lsbrenc -lresamp
-LDFLAGS+=-lm
+LDLIBS=-laacenc -lbitbuf -lfr -lsbrenc -lresamp -lm
 
 ifdef FFTW3
-	LDFLAGS+=-lfftw3f
+	LDLIBS+=-lfftw3f
 endif
 
 
@@ -25,7 +24,7 @@ $(TARGET): $(LIBS) au_channel.h adts.h aacplusenc.c
 	for i in $(LIBS) ; do \
 		$(MAKE) $$i ;\
 	done
-	$(CC) $(CFLAGS) -o $(TARGET) aacplusenc.c $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(TARGET) aacplusenc.c $(LDFLAGS) $(LDLIBS)
 
 .PHONY: clean test
 clean:
