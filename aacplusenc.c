@@ -535,9 +535,9 @@ int main(int argc, char *argv[])
 	   Close encoder
 	 */
 
-    if (numSamplesRead > 0) {
+	if (numSamplesRead > 0) {
 		AacEncClose(aacEnc);
-    }
+	}
 
 	AuChannelClose(inputFile);
 
